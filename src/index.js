@@ -1,3 +1,5 @@
+// Calculator:
+
 const beansInput = document.querySelector("#beans");
 const ratioInput = document.querySelector("#ratio");
 const waterInput = document.querySelector("#water");
@@ -82,3 +84,60 @@ waterInput.addEventListener("input", onInputChange);
 coffeeInput.addEventListener("input", onCoffeeInputChange);
 
 writeInputValues();
+
+// Timer:
+
+const timerInput = document.querySelector("#timer");
+const countdownInput = document.querySelector("#countdown");
+
+const startButton = document.querySelector("#start");
+const stopButton = document.querySelector("#stop");
+const resetButton = document.querySelector("#reset");
+
+let timer, countdown, runningInterval;
+
+const decrementCountdownValue = () => {
+    countdown--;
+    writeCountdownValue();
+    if (countdown === 0) stopTimer();
+};
+const writeCountdownValue = () => {
+    countdownInput.value = `${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, "0")}`;
+};
+
+const startTimer = () => {
+    if (countdown > 0) runningInterval = setInterval(decrementCountdownValue, 1000);
+};
+const stopTimer = () => {
+    clearInterval(runningInterval);
+};
+const resetTimer = () => {
+    countdown = timer;
+    writeCountdownValue();
+};
+
+const onTimerInputChange = () => {
+    if (timerInput.validity.valid) {
+        timer = Math.round(timerInput.valueAsNumber * 60);
+        stopTimer();
+        resetTimer();
+    }
+};
+const onStartClick = () => {
+    stopTimer();
+    startTimer();
+};
+const onStopClick = () => {
+    stopTimer();
+};
+const onResetClick = () => {
+    stopTimer();
+    resetTimer();
+};
+
+timerInput.addEventListener("input", onTimerInputChange);
+startButton.addEventListener("click", onStartClick);
+stopButton.addEventListener("click", onStopClick);
+resetButton.addEventListener("click", onResetClick);
+
+onTimerInputChange();
