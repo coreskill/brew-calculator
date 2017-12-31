@@ -94,6 +94,8 @@ const startButton = document.querySelector("#start");
 const stopButton = document.querySelector("#stop");
 const resetButton = document.querySelector("#reset");
 
+const progressElement = document.querySelector("#progress");
+
 let timer, countdown, runningInterval;
 
 const decrementCountdownValue = () => {
@@ -103,6 +105,10 @@ const decrementCountdownValue = () => {
 };
 const writeCountdownValue = () => {
     countdownInput.value = `${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, "0")}`;
+
+    let percentage = (1 - countdown / timer) * 100;
+    progressElement.style.width = `${percentage}%`;
+    progressElement.setAttribute("aria-valuenow", percentage);
 };
 
 const startTimer = () => {
