@@ -1,0 +1,13 @@
+{
+  "name": "brew-calculator",
+  "version": "1.0.0",
+  "description": "Coffee brewing calculator",
+  "scripts": {
+    "watch": "browser-sync start --server src --files src"
+  },
+  "author": "Kate Miháliková <kate@katemihalikova.cz>",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.23.1"
+  }
+}
