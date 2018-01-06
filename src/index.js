@@ -5,6 +5,11 @@ const ratioInput = document.querySelector("#ratio");
 const waterInput = document.querySelector("#water");
 const coffeeInput = document.querySelector("#coffee");
 
+const beansSlider = document.querySelector("#beans-slider");
+const ratioSlider = document.querySelector("#ratio-slider");
+const waterSlider = document.querySelector("#water-slider");
+const coffeeSlider = document.querySelector("#coffee-slider");
+
 const calculateBeans = (water, ratio) => ratio === 0 ? 0 : water / ratio;
 const calculateRatio = (water, beans) => beans === 0 ? 0 : water / beans;
 const calculateWater = (beans, ratio) => beans * ratio;
@@ -76,12 +81,38 @@ const writeInputValues = () => {
     ratioInput.value = formatNumber(ratio);
     waterInput.value = formatNumber(water);
     coffeeInput.value = formatNumber(coffee);
+
+    beansSlider.value = beans;
+    ratioSlider.value = ratio;
+    waterSlider.value = water;
+    coffeeSlider.value = coffee;
 };
 
 beansInput.addEventListener("input", onInputChange);
 ratioInput.addEventListener("input", onInputChange);
 waterInput.addEventListener("input", onInputChange);
 coffeeInput.addEventListener("input", onCoffeeInputChange);
+
+const onSliderChange = ({target}) => {
+    if (target === beansSlider) {
+        beansInput.value = beansSlider.valueAsNumber;
+        onInputChange({target: beansInput});
+    } else if (target === ratioSlider) {
+        ratioInput.value = ratioSlider.valueAsNumber;
+        onInputChange({target: ratioInput});
+    } else if (target === waterSlider) {
+        waterInput.value = waterSlider.valueAsNumber;
+        onInputChange({target: waterInput});
+    } else if (target === coffeeSlider) {
+        coffeeInput.value = coffeeSlider.valueAsNumber;
+        onCoffeeInputChange();
+    }
+};
+
+beansSlider.addEventListener("input", onSliderChange);
+ratioSlider.addEventListener("input", onSliderChange);
+waterSlider.addEventListener("input", onSliderChange);
+coffeeSlider.addEventListener("input", onSliderChange);
 
 writeInputValues();
 
