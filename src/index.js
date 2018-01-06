@@ -67,11 +67,13 @@ const onCoffeeInputChange = () => {
     }
 };
 
+const formatNumber = nr => Math.round(nr % 1 * 10) % 10 === 0 ? nr.toFixed(0) : Math.round(nr * 10 % 1 * 10) % 10 === 0 ? nr.toFixed(1) : nr.toFixed(2);
+
 const writeInputValues = () => {
-    beansInput.value = beans;
-    ratioInput.value = ratio;
-    waterInput.value = water;
-    coffeeInput.value = coffee;
+    beansInput.value = formatNumber(beans);
+    ratioInput.value = formatNumber(ratio);
+    waterInput.value = formatNumber(water);
+    coffeeInput.value = formatNumber(coffee);
 };
 
 beansInput.addEventListener("input", onInputChange);
