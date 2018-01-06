@@ -16,6 +16,20 @@ const calculateWater = (beans, ratio) => beans * ratio;
 const calculateWaterFromCoffee = (coffee) => coffee / 0.9;
 const calculateCoffee = (water) => water * 0.9;
 
+const isValid = input => input.valueAsNumber > 0;
+const markAsValid = input => {
+    input.classList.remove("is-invalid");
+    input.classList.add("is-valid");
+}
+const markAsInvalid = input => {
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+};
+const markAsValidOrInvalid = input => isValid(input) ? markAsValid(input) : markAsInvalid(input);
+const markAsComputed = input => {
+    input.classList.remove("is-valid", "is-invalid");
+};
+
 let lastChanges = [ratioInput, beansInput];
 
 let beans = 8;
@@ -24,50 +38,67 @@ let water = calculateWater(beans, ratio);
 let coffee = calculateCoffee(water);
 
 const onInputChange = ({target}) => {
+    markAsValidOrInvalid(target);
+
     if (lastChanges[0] !== target) {
         lastChanges = [target, lastChanges[0]];
     }
 
-    if (lastChanges.every(input => input.validity.valid)) {
+    if (lastChanges.every(isValid)) {
 
         if (!lastChanges.includes(beansInput)) {
             water = waterInput.valueAsNumber;
             ratio = ratioInput.valueAsNumber;
+
             beans = calculateBeans(water, ratio);
+            markAsComputed(beansInput);
         } else if (!lastChanges.includes(ratioInput)) {
             water = waterInput.valueAsNumber;
             beans = beansInput.valueAsNumber;
+
             ratio = calculateRatio(water, beans);
+            markAsComputed(ratioInput);
         } else {
             beans = beansInput.valueAsNumber;
             ratio = ratioInput.valueAsNumber;
+
             water = calculateWater(beans, ratio);
+            markAsComputed(waterInput);
         }
 
         coffee = calculateCoffee(water);
+        markAsComputed(coffeeInput);
 
         writeInputValues();
     }
 };
 
 const onCoffeeInputChange = () => {
+    markAsValidOrInvalid(coffeeInput);
+
     if (lastChanges[0] !== waterInput) {
         lastChanges = [waterInput, lastChanges[0]];
     }
 
-    if (coffeeInput.validity.valid) {
+    if (isValid(coffeeInput)) {
         coffee = coffeeInput.valueAsNumber;
+
         water = calculateWaterFromCoffee(coffee);
+        markAsComputed(waterInput);
     }
 
-    if (lastChanges.every(input => input.validity.valid)) {
+    if (lastChanges.every(isValid)) {
 
         if (!lastChanges.includes(beansInput)) {
             ratio = ratioInput.valueAsNumber;
+
             beans = calculateBeans(water, ratio);
+            markAsComputed(beansInput);
         } else {
             beans = beansInput.valueAsNumber;
-            ratio = calculateRatio(water, beans);
+
+            ratio = calculateRatio(water, coffee);
+            markAsComputed(ratioInput);
         }
 
         writeInputValues();
@@ -154,7 +185,9 @@ const resetTimer = () => {
 };
 
 const onTimerInputChange = () => {
-    if (timerInput.validity.valid) {
+    markAsValidOrInvalid(timerInput);
+
+    if (isValid(timerInput)) {
         timer = Math.round(timerInput.valueAsNumber * 60);
         stopTimer();
         resetTimer();
