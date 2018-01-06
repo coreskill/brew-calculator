@@ -147,3 +147,34 @@ stopButton.addEventListener("click", onStopClick);
 resetButton.addEventListener("click", onResetClick);
 
 onTimerInputChange();
+
+// Daytime infobox
+
+const beforeSunriseElement = document.querySelector("#before-sunrise");
+const forenoonElement = document.querySelector("#forenoon");
+const middayElement = document.querySelector("#midday");
+const eveningElement = document.querySelector("#evening");
+const afterSunsetElement = document.querySelector("#after-sunset");
+
+new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
+    .then(({coords: {latitude, longitude}}) => fetch(`https://api.sunrise-sunset.org/json?formatted=0&lat=${latitude}&lng=${longitude}&date=${new Date().toDateString()}`))
+    .then(res => res.json())
+    .then(({status, results}) => {
+        if (status !== "OK") throw status;
+        return results;
+    })
+    .then(({civil_twilight_begin, civil_twilight_end}) => {
+        let now = new Date();
+        let dawn = new Date(civil_twilight_begin);
+        let dusk = new Date(civil_twilight_end);
+
+        let elementToBeShown;
+        if (now < dawn) elementToBeShown = beforeSunriseElement; // before sunrise
+        else if (now.getHours() < 10) elementToBeShown = forenoonElement; // forenoon (after sunrise)
+        else if (now > dusk) elementToBeShown = afterSunsetElement; // after sunset
+        else if (now.getHours() >= 16) elementToBeShown = eveningElement; // evening (before sunset)
+        else elementToBeShown = middayElement; // midday, afternoon
+
+        elementToBeShown.removeAttribute("hidden");
+    })
+    .catch(error => console.log("Daytime infobox fetch failed", error));
