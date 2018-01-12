@@ -1,0 +1,15 @@
+.form-group .progress {
+    height: 38px;
+}
+
+#progress {
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+
+.input-group input[type="range"] {
+    padding-left: 0;
+    padding-right: 0;
+    border: none;
+    box-shadow: none !important;
+}

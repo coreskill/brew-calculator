@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Coffee brewing calculator</title>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1>Coffee brewing calculator</h1>
+
+            <div class="container was-validated">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="beans">Coffee beans</label>
+                            <div class="input-group">
+                                <input type="number" step="any" min="0" required id="beans" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ratio">Water</label>
+                            <div class="input-group">
+                                <input type="number" step="any" min="0" required id="water" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ratio">Ratio</label>
+                            <div class="input-group">
+                                <input type="number" step="any" min="0" required id="ratio" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">: 1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ratio">Coffee yield</label>
+                            <div class="input-group">
+                                <input type="number" step="any" min="0" required id="coffee" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="coffee">Timer</label>
+                            <div class="input-group">
+                                <input type="number" value="10" min="0" step="any" required id="timer" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-auto align-self-end">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" readonly id="countdown" class="form-control">
+                                <div class="input-group-append">
+                                    <button type="button" id="start" class="btn btn-success">Start</button>
+                                    <button type="button" id="stop" class="btn btn-danger">Stop</button>
+                                    <button type="button" id="reset" class="btn btn-dark">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

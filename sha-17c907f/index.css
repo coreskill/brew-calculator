@@ -1,0 +1,8 @@
+.form-group .progress {
+    height: 38px;
+}
+
+#progress {
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
